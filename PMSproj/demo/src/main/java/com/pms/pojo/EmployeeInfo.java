@@ -13,31 +13,64 @@ import lombok.NoArgsConstructor;
 @Data
 public class EmployeeInfo {
     public enum JobType {
-        MANAGER,      
-        ENGINEER,     
-        INTERN;        
+        MANAGER,
+        ENGINEER,
+        INTERN;
     }
-
+    private Long age;
+    /**
+     * 枚举，1市场，2人事，3产品
+     */
+    private Long dep;
+    /**
+     * 非枚举值，学历
+     */
+    private String eduBg;
+    /**
+     * 枚举，1代表在职，2辞退，3辞职，4退休
+     */
+    private Long empStatus;
+    /**
+     * 入职时间，八位数字（后端处理
+     */
+    private Date entryDate;
+    /**
+     * 枚举值，1代表男，2代表女，其余无效
+     */
+    private Long gender;
+    /**
+     * uid，唯一标识一个人的信息
+     */
+    private Long id;
+    /**
+     * 枚举值，1代表未婚，2代表已婚
+     */
+    private Long marStatus;
+    /**
+     * 名称
+     */
     private String name;
-    private Boolean gender;
-    private Integer age;
-    private String degree;
-    private Boolean married;
-    private Date joindate;
-    private JobType job;
+    /**
+     * 职称，非枚举值，
+     */
+    private String proTitle;
+    /**
+     * 允许为空，如果emp_status不等于1，则存在
+     */
+    private Date resDate;
 
     // public EmployeeInfo() {
     // }
 
-    // public EmployeeInfo(String name, Boolean gender, Integer age, String degree, Boolean married, Date joindate,
-    //         JobType job) {
+    // public EmployeeInfo(String name, Boolean gender, Integer age, String edu_bg, Interger mar_status, Date joindate,
+    //         String pro_title) {
     //     this.name = name;
     //     this.gender = gender;
     //     this.age = age;
-    //     this.degree = degree;
-    //     this.married = married;
+    //     this.edu_bg = edu_bg;
+    //     this.mar_status = mar_status;
     //     this.joindate = joindate;
-    //     this.job = job;
+    //     this.pro_title = pro_title;
     // }
 
     // public String getName() {
@@ -64,20 +97,20 @@ public class EmployeeInfo {
     //     this.age = age;
     // }
 
-    // public String getDegree() {
-    //     return degree;
+    // public String getedu_bg() {
+    //     return edu_bg;
     // }
 
-    // public void setDegree(String degree) {
-    //     this.degree = degree;
+    // public void setedu_bg(String edu_bg) {
+    //     this.edu_bg = edu_bg;
     // }
 
-    // public Boolean isMarried() {
-    //     return married;
+    // public Boolean ismar_status() {
+    //     return mar_status;
     // }
 
-    // public void setMarried(Boolean married) {
-    //     this.married = married;
+    // public void setmar_status(Interger mar_status) {
+    //     this.mar_status = mar_status;
     // }
 
     // public Date getJoindate() {
@@ -89,11 +122,11 @@ public class EmployeeInfo {
     // }
 
     // public JobType getJob() {
-    //     return job;
+    //     return pro_title;
     // }
 
-    // public void setJob(JobType job) {
-    //     this.job = job;
+    // public void setJob(String pro_title) {
+    //     this.pro_title = pro_title;
     // }
 
 }
