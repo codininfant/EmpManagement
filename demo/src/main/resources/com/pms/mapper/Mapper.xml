@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pms.mapper.EmployeeMapper">
+  <select id="list" resultType="com.pms.pojo.EmployeeInfo">
+    SELECT 
+        e.*,
+        <!-- 动态包含工资字段 -->
+        <if test="startSalary != null or endSalary != null">
+            s.salary AS current_salary
+        </if>
+    FROM employeeInfo e
+    <!-- 动态添加工资表关联 -->
+    <if test="startSalary != null or endSalary != null">
+        INNER JOIN (
+            SELECT * FROM salaryList
+        ) s ON e.id = s.user_id
+    </if>
+    <where>
+        <if test = "name != null and name != ''">
+            e.name like concat('%',#{name},'%')
+        </if>
+        <if test = "gender != null">
+            and e.gender = #{gender}
+        </if>
+        <if test = "startAge != null">
+            and e.age >= #{startAge}
+        </if>
+        <if test = "endAge != null">
+            and e.age <= #{endAge}
+        </if>
+        <if test = "startJoindate!= null">
+            and e.entry_date >= #{startJoindate}
+        </if>
+        <if test = "endJoindate!= null">
+            and e.res_date <= #{endJoindate}
+        </if>
+        <if test = "pro_title != null">
+            and e.pro_title = #{pro_title}
+        </if>
+        <if test = "mar_status != null">
+            and e.married_status = #{mar_status}
+        </if>
+        <if test = "edu_bg != null">
+            and e.edu_bg = #{edu_bg}
+        </if>
+        <if test = "dep != null">
+            and e.dep = #{dep}
+        </if>
+        <if test = "emp_status != null">
+            and e.emp_status = #{emp_status}
+        </if>
+        <if test = "startSalary != null">
+            AND s.salary >= #{startSalary}
+        </if>
+        <if test = "endSalary != null">
+            AND s.salary <= #{endSalary}
+        </if>
+    </where>
+    <if test="sortFields != null and sortFields.size() > 0">
+        ORDER BY
+        <foreach item="field" index="index" collection="sortFields" separator=",">
+            <choose>
+                <when test="field == 'age'">e.age</when>
+                <when test="field == 'joindate'">e.joindate</when>
+                <when test="field == 'gender'">e.gender</when>
+                <when test="field == 'pro_title'">e.pro_title</when>
+                <when test="field == 'married_status'">e.married_status</when>
+                <when test="field == 'edu_bg'">e.edu_bg</when>
+                <when test="field == 'salary'">s.salary</when>
+                <otherwise>e.id</otherwise> 
+            </choose>
+            <choose>
+                <when test="sortOrders[index] == 1">DESC</when>
+                <otherwise>ASC</otherwise>
+            </choose>
+        </foreach>
+    </if>
+    <if test="sortFields == null or sortFields.size() == 0">
+        ORDER BY e.id DESC
+    </if>
+  </select>
+</mapper>

@@ -13,15 +13,16 @@ import lombok.NoArgsConstructor;
 @Data
 public class EmployeeInfo {
     public enum JobType {
-        MANAGER,
-        ENGINEER,
-        INTERN;
+        MANAGER,      
+        ENGINEER,     
+        INTERN;        
     }
-    private Long age;
+
+    private long age;
     /**
      * 枚举，1市场，2人事，3产品
      */
-    private Long dep;
+    private long dep;
     /**
      * 非枚举值，学历
      */
@@ -29,23 +30,23 @@ public class EmployeeInfo {
     /**
      * 枚举，1代表在职，2辞退，3辞职，4退休
      */
-    private Long empStatus;
+    private long empStatus;
     /**
      * 入职时间，八位数字（后端处理
      */
-    private Date entryDate;
+    private long entryDate;
     /**
      * 枚举值，1代表男，2代表女，其余无效
      */
-    private Long gender;
+    private long gender;
     /**
      * uid，唯一标识一个人的信息
      */
-    private Long id;
+    private long id;
     /**
      * 枚举值，1代表未婚，2代表已婚
      */
-    private Long marStatus;
+    private long marStatus;
     /**
      * 名称
      */
@@ -57,7 +58,7 @@ public class EmployeeInfo {
     /**
      * 允许为空，如果emp_status不等于1，则存在
      */
-    private Date resDate;
+    private Long resDate;
 
     // public EmployeeInfo() {
     // }

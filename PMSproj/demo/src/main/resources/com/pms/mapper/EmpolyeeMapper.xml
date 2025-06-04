@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pms.mapper.EmployeeMapper">
+  <select id="list" resultType="com.pms.pojo.EmployeeInfo">
+    select
+        e.*
+        <!-- 动态包含工资字段 -->
+        <if test="startSalary != null or endSalary != null">
+            ,s.salary AS current_salary
+        </if>
+    from employeeInfo e
+    <!-- 动态添加工资表关联 -->
+    <if test="startSalary != null or endSalary != null">
+        INNER JOIN (
+            SELECT * FROM salaryList
+        ) s ON e.id = s.user_id
+    </if>
+    <where>
+        <if test = "name != null and name != ''">
+            e.name like concat('%',#{name},'%')
+        </if>
+        <if test = "gender != null">
+            and e.gender = #{gender}
+        </if>
+        <if test = "startAge != null">
+            and e.age >= #{startAge}
+        </if>
+        <if test = "endAge != null">
+            and e.age &lt;= #{endAge}
+        </if>
+        <if test = "startJoindate!= null">
+            and e.entry_date >= #{startJoindate}
+        </if>
+        <if test = "endJoindate!= null">
+            and e.res_date &lt;= #{endJoindate}
+        </if>
+        <if test = "pro_title != null">
+            and e.pro_title = #{pro_title}
+        </if>
+        <if test = "mar_status != null">
+            and e.married_status = #{mar_status}
+        </if>
+        <if test = "edu_bg != null">
+            and e.edu_bg = #{edu_bg}
+        </if>
+        <if test = "dep != null">
+            and e.dep = #{dep}
+        </if>
+        <if test = "emp_status != null">
+            and e.emp_status = #{emp_status}
+        </if>
+        <if test = "startSalary != null">
+            AND s.salary >= #{startSalary}
+        </if>
+        <if test = "endSalary != null">
+            AND s.salary &lt;= #{endSalary}
+        </if>
+    </where>
+    <if test="sortField != null and sortField.length > 0">
+        ORDER BY
+        <foreach item="field" index="index" collection="sortField" separator=",">
+            <choose>
+                <when test="field == 'age'">e.age</when>
+                <when test="field == 'joindate'">e.joindate</when>
+                <when test="field == 'gender'">e.gender</when>
+                <when test="field == 'pro_title'">e.pro_title</when>
+                <when test="field == 'married_status'">e.married_status</when>
+                <when test="field == 'edu_bg'">e.edu_bg</when>
+                <when test="field == 'salary'">s.salary</when>
+                <otherwise>e.id</otherwise> 
+            </choose>
+            <choose>
+                <when test="sortOrder[index] == true">DESC</when>
+                <otherwise>ASC</otherwise>
+            </choose>
+        </foreach>
+    </if>
+    <if test="sortField == null or sortField.length == 0">
+        ORDER BY e.id ASC
+    </if>
+  </select>
+
+  <insert id="insert" parameterType="com.pms.pojo.EmployeeInfo">
+      insert into employeeInfo (age, dep, edu_bg, emp_status, entry_date, gender, married_status, name, pro_title, res_date)
+      values (#{age}, #{dep}, #{eduBg}, #{empStatus}, #{entryDate}, #{gender}, #{marStatus}, #{name}, #{proTitle}, #{resDate})
+  </insert>
+
+  <delete id="delete" parameterType="Integer">
+      delete from employeeInfo where id in
+      <foreach item="id" collection="ids" open="(" separator="," close=")">
+          #{id}
+      </foreach>
+  </delete>
+
+  <update id="update" parameterType="com.pms.pojo.EmployeeInfo">
+      update employeeInfo
+      <set>
+          <if test="age != null and age != ''">age = #{age},</if>
+          <if test="dep != null and dep != ''">dep = #{dep},</if>
+          <if test="eduBg != null and eduBg != ''">edu_bg = #{eduBg},</if>
+          <if test="empStatus != null and empStatus != ''">emp_status = #{empStatus},</if>
+          <if test="entryDate != null and entryDate != ''">entry_date = #{entryDate},</if>
+          <if test="gender != null and gender != ''">gender = #{gender},</if>
+          <if test="id != null and id != ''">id = #{id},</if>
+          <if test="marStatus != null and marStatus != ''">married_status = #{marStatus},</if>
+          <if test="name != null and name != ''">name = #{name},</if>
+          <if test="proTitle != null and proTitle != ''">pro_title = #{proTitle},</if>
+          <if test="resDate != null and resDate != ''">res_date = #{resDate}</if>
+      </set>
+      where id = #{id}
+  </update>
+
+</mapper>
