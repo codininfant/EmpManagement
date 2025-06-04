@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class AccountInfo {
-    public String id;
+    public Integer id;
     public String password;
     public String identification;
 }

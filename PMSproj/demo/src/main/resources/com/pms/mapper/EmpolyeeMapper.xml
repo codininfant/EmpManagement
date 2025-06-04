@@ -18,8 +18,11 @@
         ) s ON e.id = s.user_id
     </if>
     <where>
+        <if test = "id != null">
+            e.id = #{id}
+        </if>
         <if test = "name != null and name != ''">
-            e.name like concat('%',#{name},'%')
+            and e.name like concat('%',#{name},'%')
         </if>
         <if test = "gender != null">
             and e.gender = #{gender}
@@ -83,8 +86,8 @@
   </select>
 
   <insert id="insert" parameterType="com.pms.pojo.EmployeeInfo">
-      insert into employeeInfo (age, dep, edu_bg, emp_status, entry_date, gender, married_status, name, pro_title, res_date)
-      values (#{age}, #{dep}, #{eduBg}, #{empStatus}, #{entryDate}, #{gender}, #{marStatus}, #{name}, #{proTitle}, #{resDate})
+      insert into employeeInfo (id,age, dep, edu_bg, emp_status, entry_date, gender, married_status, name, pro_title, res_date)
+      values (#{id}, #{age}, #{dep}, #{eduBg}, #{empStatus}, #{entryDate}, #{gender}, #{marStatus}, #{name}, #{proTitle}, #{resDate})
   </insert>
 
   <delete id="delete" parameterType="Integer">

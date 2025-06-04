@@ -65,4 +65,29 @@
         where user_id = #{id}
     </update>
 
+    <select id="details" resultType="com.pms.pojo.penaltyDetails">
+        select p.id, p.penaltyCount, p.pinfo
+        from penaltyDetails p
+        <where>
+            <if test = "id != null">
+                p.id = #{id}
+            </if>
+        </where>
+        ORDER BY p.id ASC
+    </select>
+
+    <delete id="DeleteDetails" parameterType="Integer">
+            delete from penaltyDetails where penaltyId in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="getDetailsById" resultType="com.pms.pojo.penaltyDetails">
+            select * from penaltyDetails where penaltyId in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
 </mapper>

@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class EmployeeInfoFromWeb {
-    private String username;
+    private Integer username;
     private String password;
     private Long age;
     /**

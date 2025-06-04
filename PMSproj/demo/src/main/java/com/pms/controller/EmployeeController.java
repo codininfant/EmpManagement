@@ -25,18 +25,16 @@ import com.pms.utils.JwtUtils;
 @RequestMapping("/employee")
 public class EmployeeController {
 
-
-
     @Autowired
     public EmployeeServer employeeServer;
 
     @GetMapping("/list")
     public Result page(@RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "10") Integer pageSize,
-    String name,@RequestParam(required = false) Integer gender,@RequestParam(required = false) Integer startAge,@RequestParam(required = false) Integer endAge,Long startJoindate,Long endJoindate,
+    Long id,String name,@RequestParam(required = false) Integer gender,@RequestParam(required = false) Integer startAge,@RequestParam(required = false) Integer endAge,Long startJoindate,Long endJoindate,
     String proTitle,Long marStatus,String eduBg,Long dep,Long empStatus,Long startSalary,Long endSalary,
     String[] sortField,Boolean[] sortOrder)
     {
-        PageBean pageBean = employeeServer.page(page, pageSize,name,gender,startAge,endAge,startJoindate,endJoindate,proTitle,marStatus,eduBg,dep,empStatus,startSalary,endSalary,sortField,sortOrder);
+        PageBean pageBean = employeeServer.page(page, pageSize,id,name,gender,startAge,endAge,startJoindate,endJoindate,proTitle,marStatus,eduBg,dep,empStatus,startSalary,endSalary,sortField,sortOrder);
         
         return Result.success(pageBean);
     }
@@ -53,13 +51,6 @@ public class EmployeeController {
     {
         employeeServer.del(ids);
         return Result.success();
-    }
-
-    @GetMapping("/{id}")
-    public Result getById(@PathVariable Long id)
-    {
-        EmployeeInfo emp = employeeServer.getById(id);
-        return Result.success(emp);
     }
 
     @PutMapping()
@@ -79,6 +70,7 @@ public class EmployeeController {
         }
         Map<String,Object> map = new HashMap<>();
         map.put("id", actInfo.getId());
+        map.put("identification", actInfo.getIdentification());
         return Result.success(JwtUtils.generateJwtToken(map));
     }
 
@@ -96,5 +88,17 @@ public class EmployeeController {
         out.close();
         writer.close();
         return Result.success();
+    }
+
+    //-----------------below is the opreation only for employees-------------------//
+    @GetMapping("/list/{id}")
+    public Result pageForEmployee(@RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "10") Integer pageSize,
+                       @PathVariable Long id,String name,@RequestParam(required = false) Integer gender,@RequestParam(required = false) Integer startAge,@RequestParam(required = false) Integer endAge,Long startJoindate,Long endJoindate,
+                       String proTitle,Long marStatus,String eduBg,Long dep,Long empStatus,Long startSalary,Long endSalary,
+                       String[] sortField,Boolean[] sortOrder)
+    {
+        PageBean pageBean = employeeServer.page(page, pageSize,id,name,gender,startAge,endAge,startJoindate,endJoindate,proTitle,marStatus,eduBg,dep,empStatus,startSalary,endSalary,sortField,sortOrder);
+
+        return Result.success(pageBean);
     }
 }

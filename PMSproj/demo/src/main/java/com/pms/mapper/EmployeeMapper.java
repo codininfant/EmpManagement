@@ -17,7 +17,7 @@ import java.util.List;
 @Mapper
 public interface EmployeeMapper {
 
-    public List<EmployeeInfo> list(String name, Integer gender, Integer startAge, Integer endAge, @DateTimeFormat(pattern = "yyyy-MM-dd") Date startJoindate, @DateTimeFormat(pattern = "yyyy-MM-dd") Date endJoindate,
+    public List<EmployeeInfo> list(Long id,String name, Integer gender, Integer startAge, Integer endAge, @DateTimeFormat(pattern = "yyyy-MM-dd") Date startJoindate, @DateTimeFormat(pattern = "yyyy-MM-dd") Date endJoindate,
                                    String pro_title, Long mar_status, String edu_bg, Long dep, Long emp_status, Long startSalary, Long endSalary,
                                    String[] sortField, Boolean[] sortOrder);
 

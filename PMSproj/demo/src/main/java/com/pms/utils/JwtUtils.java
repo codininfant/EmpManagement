@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.Map;
 
 public class JwtUtils {
-    private static String signkey = "pms";
+    private static String signkey = "pms".repeat(21)+"pms";;
     private static int expirationTime = 60 * 60 * 24; // 24 hours
     public static String generateJwtToken(Map<String, Object> claims) {
         String JwtToken = Jwts.builder().addClaims(claims).setExpiration(new Date(System.currentTimeMillis() + expirationTime * 1000))

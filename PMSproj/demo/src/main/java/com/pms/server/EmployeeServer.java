@@ -27,7 +27,7 @@ public class EmployeeServer {
     @Autowired
     public EmployeeMapper employeeMapper;
 
-    public PageBean page(Integer page,Integer pageSize,String name,Integer gender,Integer startAge,Integer endAge,Long LstartJoindate,Long LendJoindate,
+    public PageBean page(Integer page,Integer pageSize,Long id,String name,Integer gender,Integer startAge,Integer endAge,Long LstartJoindate,Long LendJoindate,
     String pro_title,Long mar_status,String edu_bg,Long dep,Long emp_status,Long startSalary,Long endSalary,
     String[] sortField,Boolean[] sortOrder)
     {
@@ -53,7 +53,7 @@ public class EmployeeServer {
 
         PageHelper.startPage(page, pageSize);
 
-        Page<EmployeeInfo> p = (Page<EmployeeInfo>)employeeMapper.list(name,gender,startAge,endAge,startJoindate,endJoindate,pro_title, mar_status,edu_bg,dep,emp_status,startSalary,endSalary,sortField,sortOrder);
+        Page<EmployeeInfo> p = (Page<EmployeeInfo>)employeeMapper.list(id,name,gender,startAge,endAge,startJoindate,endJoindate,pro_title, mar_status,edu_bg,dep,emp_status,startSalary,endSalary,sortField,sortOrder);
 
         PageBean pageBean = new PageBean(p.getTotal(), p.getResult());
         return pageBean;
