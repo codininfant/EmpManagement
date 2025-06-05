@@ -115,4 +115,11 @@
       where id = #{id}
   </update>
 
+  <select id="getByids" parameterType="Long" resultType="com.pms.pojo.EmployeeInfo">
+        select * from employeeInfo where id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+  </select>
+
 </mapper>

@@ -33,6 +33,5 @@ public interface EmployeeMapper {
     @Select("SELECT * FROM accountInfo WHERE id = #{username} AND password = #{password}")
     AccountInfo getByLogin(EmployeeInfoFromWeb emp);
 
-    @Select("SELECT * FROM employeeInfo WHERE id IN (#{ids})")
-    List<EmployeeInfo> getByids(List<Long> ids);
+    public List<EmployeeInfo> getByids(List<Long> ids);
 }

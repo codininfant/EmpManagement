@@ -12,6 +12,7 @@ import cn.hutool.poi.excel.ExcelWriter;
 import com.pms.pojo.*;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import com.pms.pojo.EmployeeInfo.JobType;
 import com.pms.server.EmployeeServer;
 import com.pms.utils.JwtUtils;
-
+@Slf4j
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
@@ -75,9 +76,10 @@ public class EmployeeController {
     }
 
     @GetMapping("/export/{ids}")
-    public Result export(@PathVariable List<Long> ids, HttpServletResponse response) throws IOException {
+    public void export(@PathVariable List<Long> ids, HttpServletResponse response) throws IOException {
+        log.info("ids:{}", ids);
         List<EmployeeInfo> emps = employeeServer.getByids(ids);
-
+        log.info("emps:{}", emps);
         ExcelWriter writer = ExcelUtil.getWriter(true);
         writer.write(emps, true);
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.spreadsheetml.sheet;charset=UTF-8");
@@ -87,7 +89,7 @@ public class EmployeeController {
         writer.flush(out, true);
         out.close();
         writer.close();
-        return Result.success();
+        //return Result.success();
     }
 
     //-----------------below is the opreation only for employees-------------------//
