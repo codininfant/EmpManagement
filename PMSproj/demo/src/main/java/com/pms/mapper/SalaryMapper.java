@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.sql.Date;
 import java.util.List;
 
 @Mapper
@@ -21,12 +22,12 @@ public interface SalaryMapper {
 
     public List<penaltyDetails> details(Integer id);
 
-    @Insert("INSERT INTO penaltyDetails (id, penaltyCount, pinfo, date) VALUES (#{id}, #{penalty}, #{reason}, #{date})")
-    public void addDetails(Integer id, Integer penalty, String reason, String date);
+    @Insert("INSERT INTO penaltyInfo (pid, penaltyCount, pinfo, pdate) VALUES (#{id}, #{penalty}, #{reason}, #{date})")
+    public void addDetails(Integer id, Integer penalty, String reason, Date date);
 
     public void DeleteDetails(List<Integer> ids);
 
-    @Select("SELECT * FROM salaryInfo WHERE id = #{id}")
+    @Select("SELECT * FROM salaryList WHERE id = #{id}")
     public SalaryInfo getSalaryById(Integer id);
 
     public List<penaltyDetails> getDetailsById(List<Integer> ids);

@@ -3,6 +3,7 @@ package com.pms.controller;
 import com.pms.pojo.PageBean;
 import com.pms.pojo.Result;
 import com.pms.pojo.SalaryInfo;
+import com.pms.pojo.penaltyDetails;
 import com.pms.server.SalaryServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -48,9 +49,9 @@ public class SalaryController {
         return Result.success(pageBean);
     }
 
-    @GetMapping("/addDetails")
-    public Result addDetails(Integer id, Integer penalty, String reason, String date) {
-        salaryServer.addDetails(id, penalty, reason, date);
+    @PostMapping("/addDetails")
+    public Result addDetails(@RequestBody penaltyDetails details) {
+        salaryServer.addDetails(details);
         return Result.success();
     }
 

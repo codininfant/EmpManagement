@@ -28,5 +28,5 @@ public class SalaryInfo {
     /**
      * 与大表对应
      */
-    private Long userid;
+    private Long id;
 }

@@ -21,7 +21,7 @@ import com.pms.pojo.PageBean;
 @Service
 public class EmployeeServer {
 
-    private static final DateTimeFormatter INPUT_FORMATTER =
+    public static final DateTimeFormatter INPUT_FORMATTER =
             DateTimeFormatter.ofPattern("yyyyMMdd"); // 无分隔符格式
 
     @Autowired

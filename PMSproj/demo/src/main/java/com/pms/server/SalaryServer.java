@@ -10,7 +10,11 @@ import com.pms.pojo.penaltyDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
+
+import static com.pms.server.EmployeeServer.INPUT_FORMATTER;
 
 @Service
 public class SalaryServer {
@@ -39,11 +43,11 @@ public class SalaryServer {
         salaryMapper.delete(ids);
     }
 
-    public void addDetails(Integer id, Integer penalty, String reason, String date) {
-        SalaryInfo salary = salaryMapper.getSalaryById(id);
-        salary.setPenalty(salary.getPenalty() + penalty);
+    public void addDetails(penaltyDetails details) {
+        SalaryInfo salary = salaryMapper.getSalaryById(details.getUserId());
+        salary.setPenalty(salary.getPenalty() + details.getPenaltyCount());
         salaryMapper.update(salary);
-        salaryMapper.addDetails(id, penalty, reason, date);
+        salaryMapper.addDetails(details.getUserId(), details.getPenaltyCount(), details.getPinfo(), details.getDate());
 
     }
 
